@@ -2,18 +2,20 @@ class Leitor
 {
     public string Nome;
     public string Cpf;
-    public List<Livro> livros; 
+    public List<Livro> livros;
 
-    public Leitor(string nome, string cpf)
+    public Leitor()
     {
-        Nome = nome;
-        Cpf = cpf;
+        Console.Write("Nome: ");
+        Nome = Console.ReadLine();
+        Console.Write("CPF: ");
+        Cpf = Console.ReadLine();
         livros = new List<Livro>();
     }
 
     public void AdicionarLivro(Livro livro) => livros.Add(livro);
 
-   public void ListarLivros()
+    public void ListarLivros()
     {
         Console.WriteLine($"Livros de {Nome}:");
         livros.ForEach(l => Console.WriteLine(l));
@@ -26,9 +28,9 @@ class Leitor
         if (livro != null) livros.Remove(livro);
     }
 
-    public void EditarNome(string Cpf)
+    public void EditarNome(string novoNome)
     {
-        //fazer metodo para editar nome do leitor
+        Nome = novoNome;
     }
 
     public List<Livro> ObterLivros() => livros;

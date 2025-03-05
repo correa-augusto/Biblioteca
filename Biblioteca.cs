@@ -4,7 +4,7 @@ class Biblioteca
 
     public bool AdicionarLeitor(Leitor leitor)
     {
-        if(leitores.Exists(l => l.Cpf == leitor.Cpf))
+        if (leitores.Exists(l => l.Cpf == leitor.Cpf))
         {
             return false;
         }
@@ -30,11 +30,11 @@ class Biblioteca
 
             if (leitor.ObterLivros().Any())
             {
-              leitor.ObterLivros().ForEach(livro => Console.WriteLine($"- {livro.Titulo} ({livro.AnoPublicacao})"));
+                leitor.ObterLivros().ForEach(livro => Console.WriteLine($"- {livro.Titulo} ({livro.AnoPublicacao})"));
             }
             else
             {
-             Console.WriteLine("Nenhum livro cadastrado.");
+                Console.WriteLine("Nenhum livro cadastrado.");
             }
         }
         else
@@ -63,7 +63,7 @@ class Biblioteca
         }
         else
         {
-             Console.WriteLine("Leitor não encontrado.");
+            Console.WriteLine("Leitor não encontrado.");
         }
     }
 
@@ -81,36 +81,9 @@ class Biblioteca
 
         if (livro != null)
         {
-            Console.Write("Novo título: ");
-            string novoTitulo = Console.ReadLine();
-
-            Console.Write("Novo subtitulo: ");
-            string novoSubtitulo = Console.ReadLine();
-
-            Console.Write("Novo autor: ");
-            string novoAutor = Console.ReadLine();
-
-            Console.Write("Nova editora: ");
-            string novaEditora = Console.ReadLine();
-
-            Console.Write("Novo genero: ");
-            string novoGenero = Console.ReadLine();
-
-            Console.Write("Novo ano: ");
-            int novoAno = int.Parse(Console.ReadLine());
-
-
-           Console.Write("Novo tipo de capa: ");
-           string novaCapa = Console.ReadLine();
-
-
-           Console.Write("Novo numero de paginas: ");
-           int novoNumeroDePaginas = int.Parse(Console.ReadLine());
-
-
             leitores.Remove(leitor);
             leitor.RemoverLivro(titulo);
-            leitor.AdicionarLivro(new Livro(novoTitulo, novoSubtitulo, novoAutor, novaEditora, novoGenero, novoAno, novaCapa, novoNumeroDePaginas));
+            leitor.AdicionarLivro(new Livro());
             leitores.Add(leitor);
         }
     }
@@ -127,9 +100,9 @@ class Biblioteca
         {
             Console.WriteLine("Leitor não encontrado.");
         }
-    }   
+    }
 
-     public void BuscarLivro(string titulo)
+    public void BuscarLivro(string titulo)
     {
         leitores.ForEach(l =>
         {
@@ -140,13 +113,13 @@ class Biblioteca
 
     public void DoarLivro(string titulo, string cpfRecebedor)
     {
-       
-       var LeitorAntigo = leitores.Find(l => l.livros.Any(livro => livro.Titulo == titulo));
-       var livro = LeitorAntigo.livros.Find(l => l.Titulo == titulo);
 
-       LeitorAntigo.livros.Remove(livro);
+        var LeitorAntigo = leitores.Find(l => l.livros.Any(livro => livro.Titulo == titulo));
+        var livro = LeitorAntigo.livros.Find(l => l.Titulo == titulo);
 
-       var Leitornovo =  leitores.Find(l => l.Cpf == cpfRecebedor);
-       Leitornovo.livros.Add(livro);
+        LeitorAntigo.livros.Remove(livro);
+
+        var Leitornovo = leitores.Find(l => l.Cpf == cpfRecebedor);
+        Leitornovo.livros.Add(livro);
     }
 }
