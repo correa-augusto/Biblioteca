@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Biblioteca;
+namespace AplicativoBiblioteca;
 
 class Program
 {
@@ -33,15 +33,15 @@ class Program
 
              switch (opcao)
            {
-                case "1": biblioteca.CadastrarLeitor(); break;
+                case "1": biblioteca.AdicionarLeitor(); break;
                 case "2": biblioteca.ListarLeitores(); break;
                 case "3": biblioteca.EditarLeitor(); break;
-                case "4": biblioteca.ExcluirLeitor(); break;
-                case "5": biblioteca.AdicionarLivro(); break;
-                case "6": biblioteca.EditarLivro(); break;
-                case "7": biblioteca.RemoverLivro(); break;
+                case "4": biblioteca.RemoverLeitor(); break;
+                case "5": biblioteca.AdicionarLivrosAoLeitor(); break;
+                case "6": biblioteca.EditarLivroDoLeitor(); break;
+                case "7": biblioteca.RemoverLivroDoLeitor(); break;
                 case "8": biblioteca.DoarLivro(); break;
-                case "9": biblioteca.ListarLivrosDoLeitor(); break;
+                case "9": biblioteca.ListarLeitorEspecifico(); break;
                 case "10": biblioteca.BuscarLivro(); break;
                 case "0": return;
                 default: Console.WriteLine("Opção inválida!"); break;
