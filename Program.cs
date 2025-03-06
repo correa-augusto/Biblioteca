@@ -64,15 +64,15 @@ class Program
                          biblioteca.RemoverLivroDoLeitor(cpf, titulo);
                          break;
                     case "8":
-                         Console.Write("Digite o título do livro: ");
-                         titulo = Console.ReadLine();
-                         Console.Write("Digite o CPF do leitor que irá receber: ");
+                         Console.Write("Digite o cpf do leitor que irá receber: ");
                          cpf = Console.ReadLine();
+                         Console.Write("Digite o livro: ");
+                         titulo = Console.ReadLine();
                          
-                         biblioteca.DoarLivro(titulo, cpf);
+                         biblioteca.DoarLivro(cpf, titulo);
                          break;
                     case "9":
-                         Console.Write("Digite o CPF do leitor que irá receber: ");
+                         Console.Write("Digite o CPF do leitor: ");
                          cpf = Console.ReadLine();
                          biblioteca.ListarLeitorEspecifico(cpf);
                          break;

@@ -6,6 +6,7 @@ class Biblioteca
     {
         if (leitores.Exists(l => l.Cpf == leitor.Cpf))
         {
+            Console.WriteLine("leitor ja existe");
             return false;
         }
         else
@@ -71,21 +72,38 @@ class Biblioteca
     public void AdicionarLivrosAoLeitor(string cpf, Livro livro)
     {
         Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
-        leitor.AdicionarLivro(livro);
+        if(leitor!= null)
+        {
+            leitor.AdicionarLivro(livro);
+        }
+        else
+        {
+            Console.WriteLine("Não é possivel adicionar livro, pois o leitor não existe");
+        }
     }
 
     public void EditarLivroDoLeitor(string cpf, string titulo)
     {
         Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
+
+        if(leitor == null)
+        {
+            Console.WriteLine("leitor não encontrado");
+            return;
+        }
+
         Livro livro = leitor.BuscarLivro(titulo);
 
-        if (livro != null)
+        if(livro == null)
         {
+            Console.WriteLine("livro não encontrado na lista do leitor");
+            return;
+        }
+
             leitores.Remove(leitor);
             leitor.RemoverLivro(titulo);
             leitor.AdicionarLivro(new Livro());
             leitores.Add(leitor);
-        }
     }
 
     public void RemoverLivroDoLeitor(string cpf, string titulo)
@@ -114,8 +132,21 @@ class Biblioteca
     public void DoarLivro(string titulo, string cpfRecebedor)
     {
 
-        var LeitorAntigo = leitores.Find(l => l.livros.Any(livro => livro.Titulo == titulo));
-        var livro = LeitorAntigo.livros.Find(l => l.Titulo == titulo);
+        var LeitorAntigo = leitores.FirstOrDefault(l => l.livros.Any(livro => livro.Titulo == titulo));
+        
+        if(LeitorAntigo == null)
+        {
+            Console.WriteLine("leitor não existe");
+            return;
+        }
+
+        var livro = LeitorAntigo.livros.FirstOrDefault(l => l.Titulo == titulo);
+
+        if(livro == null)
+        {
+            Console.WriteLine("livro não existe");
+            return;
+        }
 
         LeitorAntigo.livros.Remove(livro);
 
