@@ -53,11 +53,7 @@ namespace AplicativoBiblioteca
                               biblioteca.EditarLivroDoLeitor(cpf, titulo);
                               break;
                          case "7":
-                              Console.Write("Digite o CPF do leitor: ");
-                              cpf = Console.ReadLine();
-                              Console.Write("Digite o título do livro: ");
-                              titulo = Console.ReadLine();
-                              biblioteca.RemoverLivroDoLeitor(cpf, titulo);
+                              biblioteca.RemoverLivroDoLeitor();
                               break;
                          case "8":
                               Console.Write("Digite o CPF do leitor que irá receber: ");

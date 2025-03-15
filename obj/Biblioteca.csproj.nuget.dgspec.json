@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj": {}
+    "C:\\Users\\Nícolas\\Desktop\\tiolutrabaia\\Biblioteca\\Biblioteca.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj": {
+    "C:\\Users\\Nícolas\\Desktop\\tiolutrabaia\\Biblioteca\\Biblioteca.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj",
+        "projectUniqueName": "C:\\Users\\Nícolas\\Desktop\\tiolutrabaia\\Biblioteca\\Biblioteca.csproj",
         "projectName": "Biblioteca",
-        "projectPath": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj",
-        "packagesPath": "C:\\Users\\Augusto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\obj\\",
+        "projectPath": "C:\\Users\\Nícolas\\Desktop\\tiolutrabaia\\Biblioteca\\Biblioteca.csproj",
+        "packagesPath": "C:\\Users\\Nícolas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nícolas\\Desktop\\tiolutrabaia\\Biblioteca\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Augusto\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Nícolas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

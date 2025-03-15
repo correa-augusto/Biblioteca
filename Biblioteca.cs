@@ -21,7 +21,7 @@ namespace AplicativoBiblioteca
 
         public void ListarLeitores()
         {
-            leitores.ForEach(l => Console.WriteLine($"Nome: {l.Nome} | CPF: {l.Cpf}"));
+            leitores.ForEach(l => Console.WriteLine($"Nome: {l.Nome} | CPF: {l.Cpf} | Idade: {l.Idade}"));
         }
 
         public void ListarLeitorEspecifico(string cpf)
@@ -29,7 +29,7 @@ namespace AplicativoBiblioteca
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
             if (leitor != null)
             {
-                Console.WriteLine($"Nome: {leitor.Nome} | CPF: {leitor.Cpf}");
+                Console.WriteLine($"Nome: {leitor.Nome} | CPF: {leitor.Cpf} | Idade: {leitor.Idade}");
                 Console.WriteLine("Livros do leitor:");
                 if (leitor.ObterLivros().Any())
                 {
@@ -103,11 +103,15 @@ namespace AplicativoBiblioteca
             livro.AnoPublicacao = int.Parse(Console.ReadLine());
         }
 
-        public void RemoverLivroDoLeitor(string cpf, string titulo)
+        public void RemoverLivroDoLeitor()
         {
+            Console.Write("Digite o CPF do leitor: ");
+            string cpf = Console.ReadLine();
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
             if (leitor != null)
             {
+                Console.Write("Digite o título do livro: ");
+                string titulo = Console.ReadLine();
                 leitor.RemoverLivro(titulo);
                 Console.WriteLine($"Livro \"{titulo}\" removido do leitor {leitor.Nome}.");
             }
