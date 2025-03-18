@@ -6,15 +6,15 @@ namespace AplicativoBiblioteca
 {
     class Biblioteca
     {
-        private List<Leitor> leitores = new List<Leitor>();
+        public static List<Leitor> leitores = new List<Leitor>();
+
+        public static bool ExisteCPF(string cpf)
+        {
+            return leitores.Exists(l => l.Cpf == cpf);
+        }
 
         public bool AdicionarLeitor(Leitor leitor)
         {
-            if (leitores.Exists(l => l.Cpf == leitor.Cpf))
-            {
-                Console.WriteLine("Leitor já existe.");
-                return false;
-            }
             leitores.Add(leitor);
             return true;
         }
@@ -24,8 +24,10 @@ namespace AplicativoBiblioteca
             leitores.ForEach(l => Console.WriteLine($"Nome: {l.Nome} | CPF: {l.Cpf} | Idade: {l.Idade}"));
         }
 
-        public void ListarLeitorEspecifico(string cpf)
+        public void ListarLeitorEspecifico()
         {
+            Console.Write("Digite o CPF do leitor: ");
+            string cpf = Console.ReadLine().Trim();
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
             if (leitor != null)
             {
@@ -46,18 +48,38 @@ namespace AplicativoBiblioteca
             }
         }
 
-        public void RemoverLeitor(string cpf)
+        public void RemoverLeitor()
         {
+            Console.Write("Digite o CPF do leitor: ");
+            string cpf = Console.ReadLine().Trim();
+
+            if (!ExisteCPF(cpf))
+            {
+                Console.WriteLine("Leitor não encontrado.");
+                return;
+            }
+
             leitores.RemoveAll(l => l.Cpf == cpf);
         }
 
-        public void EditarLeitor(string cpf)
+        public void EditarLeitor()
         {
+            Console.Write("Digite o CPF do leitor: ");
+            string cpf = Console.ReadLine().Trim();
+
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
             if (leitor != null)
             {
                 Console.Write($"Novo nome para {leitor.Nome}: ");
-                string novoNome = Console.ReadLine();
+                string novoNome = Console.ReadLine().Trim();
+
+                while (string.IsNullOrEmpty(novoNome))
+                {
+                    Console.WriteLine("O nome não pode estar vazio.");
+                    Console.Write("Digite um novo nome: ");
+                    novoNome = Console.ReadLine().Trim();
+                }
+
                 leitor.EditarNome(novoNome);
                 Console.WriteLine("Leitor atualizado com sucesso!");
             }
@@ -67,11 +89,14 @@ namespace AplicativoBiblioteca
             }
         }
 
-        public void AdicionarLivrosAoLeitor(string cpf, Livro livro)
+        public void AdicionarLivrosAoLeitor()
         {
+            Console.Write("Digite o CPF do leitor: ");
+            string cpf = Console.ReadLine().Trim();
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
             if (leitor != null)
             {
+                Livro livro = new Livro();
                 leitor.AdicionarLivro(livro);
             }
             else
@@ -80,8 +105,10 @@ namespace AplicativoBiblioteca
             }
         }
 
-        public void EditarLivroDoLeitor(string cpf, string titulo)
+        public void EditarLivroDoLeitor()
         {
+            Console.Write("Digite o CPF do leitor: ");
+            string cpf = Console.ReadLine().Trim();
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
             if (leitor == null)
             {
@@ -89,6 +116,8 @@ namespace AplicativoBiblioteca
                 return;
             }
 
+            Console.Write("Digite o título do livro: ");
+            string titulo = Console.ReadLine();
             Livro livro = leitor.BuscarLivro(titulo);
             if (livro == null)
             {
@@ -121,8 +150,10 @@ namespace AplicativoBiblioteca
             }
         }
 
-        public void BuscarLivro(string titulo)
+        public void BuscarLivro()
         {
+            Console.Write("Digite o título do livro: ");
+            string titulo = Console.ReadLine();
             leitores.ForEach(l =>
             {
                 if (l.ObterLivros().Any(livro => livro.Titulo.Equals(titulo, StringComparison.OrdinalIgnoreCase)))
@@ -130,15 +161,19 @@ namespace AplicativoBiblioteca
             });
         }
 
-        public void DoarLivro(string titulo, string cpfRecebedor)
+        public void DoarLivro()
         {
-            Leitor leitorAntigo = leitores.FirstOrDefault(l => l.ObterLivros().Any(livro => livro.Titulo == titulo));
+            Console.Write("Digite o CPF do leitor doador: ");
+            string cpfDoador = Console.ReadLine();
+            Leitor leitorAntigo = leitores.FirstOrDefault(l => l.Cpf == cpfDoador);
             if (leitorAntigo == null)
             {
                 Console.WriteLine("Leitor doador não encontrado.");
                 return;
             }
 
+            Console.Write("Digite o título do livro: ");
+            string titulo = Console.ReadLine();
             Livro livro = leitorAntigo.BuscarLivro(titulo);
             if (livro == null)
             {
@@ -146,10 +181,12 @@ namespace AplicativoBiblioteca
                 return;
             }
 
-            leitorAntigo.RemoverLivro(titulo);
+            Console.Write("Digite o CPF do leitor destinatário: ");
+            string cpfRecebedor = Console.ReadLine();
             Leitor leitorNovo = leitores.FirstOrDefault(l => l.Cpf == cpfRecebedor);
             if (leitorNovo != null)
             {
+                leitorAntigo.RemoverLivro(titulo);
                 leitorNovo.AdicionarLivro(livro);
                 Console.WriteLine($"Livro \"{titulo}\" doado para {leitorNovo.Nome}.");
             }

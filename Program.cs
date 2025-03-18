@@ -1,5 +1,6 @@
 ﻿using System;
 
+// Augusto Correa, Leonardo Alves, Nícolas Bastos
 namespace AplicativoBiblioteca
 {
      class Program
@@ -33,44 +34,28 @@ namespace AplicativoBiblioteca
                          case "1": biblioteca.AdicionarLeitor(new Leitor()); break;
                          case "2": biblioteca.ListarLeitores(); break;
                          case "3":
-                              Console.Write("Digite o CPF do leitor: ");
-                              biblioteca.EditarLeitor(Console.ReadLine());
+                              biblioteca.EditarLeitor();
                               break;
                          case "4":
-                              Console.Write("Digite o CPF do leitor: ");
-                              biblioteca.RemoverLeitor(Console.ReadLine());
+                              biblioteca.RemoverLeitor();
                               break;
                          case "5":
-                              Console.Write("Digite o CPF do leitor: ");
-                              string cpf = Console.ReadLine();
-                              biblioteca.AdicionarLivrosAoLeitor(cpf, new Livro());
+                              biblioteca.AdicionarLivrosAoLeitor();
                               break;
                          case "6":
-                              Console.Write("Digite o CPF do leitor: ");
-                              cpf = Console.ReadLine();
-                              Console.Write("Digite o título do livro: ");
-                              string titulo = Console.ReadLine();
-                              biblioteca.EditarLivroDoLeitor(cpf, titulo);
+                              biblioteca.EditarLivroDoLeitor();
                               break;
                          case "7":
                               biblioteca.RemoverLivroDoLeitor();
                               break;
                          case "8":
-                              Console.Write("Digite o CPF do leitor que irá receber: ");
-                              cpf = Console.ReadLine();
-                              Console.Write("Digite o livro: ");
-                              titulo = Console.ReadLine();
-                              biblioteca.DoarLivro(titulo, cpf);
+                              biblioteca.DoarLivro();
                               break;
                          case "9":
-                              Console.Write("Digite o CPF do leitor: ");
-                              cpf = Console.ReadLine();
-                              biblioteca.ListarLeitorEspecifico(cpf);
+                              biblioteca.ListarLeitorEspecifico();
                               break;
                          case "10":
-                              Console.Write("Digite o título do livro: ");
-                              titulo = Console.ReadLine();
-                              biblioteca.BuscarLivro(titulo);
+                              biblioteca.BuscarLivro();
                               break;
                          case "0": return;
                          default: Console.WriteLine("Opção inválida!"); break;

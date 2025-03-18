@@ -14,23 +14,26 @@ namespace AplicativoBiblioteca
 
         public Leitor()
         {
-
             while (string.IsNullOrWhiteSpace(Cpf))
             {
-
-                Console.Write("CPF: ");
+                Console.Write("CPF (digite \"sair\" para voltar ao menu): ");
                 Cpf = Console.ReadLine().Trim();
+
+                if (Cpf.Equals("sair", StringComparison.OrdinalIgnoreCase))
+                {
+                    return;
+                }
 
                 if (string.IsNullOrWhiteSpace(Cpf))
                 {
                     Console.WriteLine("O CPF não pode estar vazio.");
-
+                }
+                else if (Biblioteca.ExisteCPF(Cpf))
+                {
+                    Console.WriteLine("O CPF já está cadastrado.");
+                    Cpf = string.Empty;
                 }
             }
-
-            /////
-            ///
-
 
             while (string.IsNullOrWhiteSpace(Nome))
             {
@@ -41,7 +44,6 @@ namespace AplicativoBiblioteca
                 if (string.IsNullOrWhiteSpace(Nome))
                 {
                     Console.WriteLine("O nome não pode estar vazio.");
-
                 }
             }
 
@@ -51,20 +53,14 @@ namespace AplicativoBiblioteca
                 Console.Write("Idade: ");
                 var IdadeInput = Console.ReadLine();
 
-                if (int.TryParse(IdadeInput, out Idade))
+                if (int.TryParse(IdadeInput, out Idade) && Idade < 0)
                 {
-                    
-                    if (Idade <= 0)
-                    {
-                        Console.WriteLine("A idade não pode ser menor ou igual a zero.");
-                    }
+                    Console.WriteLine("A idade não pode ser menor ou igual a zero.");
                 }
-                else
+                else if (!int.TryParse(IdadeInput, out Idade))
                 {
                     Console.WriteLine("A idade deve ser um número inteiro.");
                 }
-
-
             }
 
             livros = new List<Livro>();
