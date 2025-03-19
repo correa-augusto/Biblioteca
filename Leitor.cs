@@ -6,10 +6,68 @@ namespace AplicativoBiblioteca
 {
     class Leitor
     {
-        public string Nome;
+        private string Nome;
+        public string _nome
+        {
+            get => Nome;
+            set
+            {
+                string valorTrim = value?.Trim();
+                if (!string.IsNullOrEmpty(valorTrim))
+                {
+                    Nome = valorTrim;
+                }
+                else
+                {
+                    Console.WriteLine("O nome não pode estar vazio.");
+                }
+            }
+        }
 
-        public int Idade;
-        public string Cpf;
+        private int Idade;
+        public int _idade
+        {
+            get => Idade;
+            set
+            {
+
+                if (value > 0)
+                {
+                    Idade = value;
+                }
+                else
+                {
+                    Console.WriteLine("A idade deve ser maior que zero.");
+                }
+            }
+        }
+
+        private string Cpf;
+        public string _cpf
+        {
+            get => Cpf;
+            set
+            {
+                string valorTrim = value?.Trim();
+                if (!string.IsNullOrEmpty(valorTrim))
+                {
+                    if (Biblioteca.ExisteCPF(valorTrim))
+                    {
+                        Console.WriteLine("CPF já cadastrado.");
+                    }
+                    else
+                    {
+                        Cpf = valorTrim;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("O CPF não pode estar vazio.");
+                }
+                
+            }
+        }
+
         private List<Livro> livros;
 
         public Leitor()
@@ -17,29 +75,31 @@ namespace AplicativoBiblioteca
             while (string.IsNullOrWhiteSpace(Cpf))
             {
                 Console.Write("CPF (digite \"sair\" para voltar ao menu): ");
-                Cpf = Console.ReadLine().Trim();
+                string inputCpf = Console.ReadLine()?.Trim();
 
-                if (Cpf.Equals("sair", StringComparison.OrdinalIgnoreCase))
+                if (inputCpf.Equals("sair", StringComparison.OrdinalIgnoreCase))
                 {
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(Cpf))
+                if (string.IsNullOrWhiteSpace(inputCpf))
                 {
                     Console.WriteLine("O CPF não pode estar vazio.");
                 }
-                else if (Biblioteca.ExisteCPF(Cpf))
+                else if (Biblioteca.ExisteCPF(inputCpf))
                 {
                     Console.WriteLine("O CPF já está cadastrado.");
-                    Cpf = string.Empty;
+                }
+                else
+                {
+                    Cpf = inputCpf;
                 }
             }
 
             while (string.IsNullOrWhiteSpace(Nome))
             {
-
                 Console.Write("Nome: ");
-                Nome = Console.ReadLine().Trim();
+                Nome = Console.ReadLine()?.Trim();
 
                 if (string.IsNullOrWhiteSpace(Nome))
                 {
@@ -49,17 +109,16 @@ namespace AplicativoBiblioteca
 
             while (Idade <= 0)
             {
-
                 Console.Write("Idade: ");
-                var IdadeInput = Console.ReadLine();
+                string idadeInput = Console.ReadLine();
 
-                if (int.TryParse(IdadeInput, out Idade) && Idade < 0)
+                if (int.TryParse(idadeInput, out int idade) && idade > 0)
                 {
-                    Console.WriteLine("A idade não pode ser menor ou igual a zero.");
+                    Idade = idade;
                 }
-                else if (!int.TryParse(IdadeInput, out Idade))
+                else
                 {
-                    Console.WriteLine("A idade deve ser um número inteiro.");
+                    Console.WriteLine("A idade deve ser um número inteiro maior que zero.");
                 }
             }
 
@@ -80,10 +139,29 @@ namespace AplicativoBiblioteca
         public void RemoverLivro(string titulo)
         {
             Livro livro = BuscarLivro(titulo);
-            if (livro != null) livros.Remove(livro);
+            if (livro != null)
+            {
+                livros.Remove(livro);
+                Console.WriteLine($"Livro \"{titulo}\" removido com sucesso.");
+            }
+            else
+            {
+                Console.WriteLine($"Livro \"{titulo}\" não encontrado.");
+            }
         }
 
-        public void EditarNome(string novoNome) => Nome = novoNome;
+        public void EditarNome(string novoNome)
+        {
+            if (!string.IsNullOrWhiteSpace(novoNome))
+            {
+                Nome = novoNome.Trim();
+                Console.WriteLine("Nome atualizado com sucesso.");
+            }
+            else
+            {
+                Console.WriteLine("O novo nome não pode estar vazio.");
+            }
+        }
 
         public List<Livro> ObterLivros() => livros;
     }
