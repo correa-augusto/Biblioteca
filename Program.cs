@@ -31,7 +31,16 @@ namespace AplicativoBiblioteca
 
                     switch (opcao)
                     {
-                         case "1": biblioteca.AdicionarLeitor(new Leitor()); break;
+                         case "1":
+                              try
+                              {
+                                   biblioteca.CriarLeitor();
+                              }
+                              catch (Exception ex)
+                              {
+                                   Console.WriteLine(ex.Message);
+                              }
+                              ; break;
                          case "2": biblioteca.ListarLeitores(); break;
                          case "3":
                               biblioteca.EditarLeitor();

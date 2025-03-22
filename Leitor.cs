@@ -6,63 +6,62 @@ namespace AplicativoBiblioteca
 {
     class Leitor
     {
-        public string Nome;
-
-        public int Idade;
-        public string Cpf;
+        private string nome;
+        private int idade;
+        private string cpf;
         private List<Livro> livros;
 
-        public Leitor()
+        public string Nome
         {
-            while (string.IsNullOrWhiteSpace(Cpf))
+            get => nome;
+            private set
             {
-                Console.Write("CPF (digite \"sair\" para voltar ao menu): ");
-                Cpf = Console.ReadLine().Trim();
-
-                if (Cpf.Equals("sair", StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    return;
+                    throw new Exception("Nome não pode ser vazio");
                 }
-
-                if (string.IsNullOrWhiteSpace(Cpf))
-                {
-                    Console.WriteLine("O CPF não pode estar vazio.");
-                }
-                else if (Biblioteca.ExisteCPF(Cpf))
-                {
-                    Console.WriteLine("O CPF já está cadastrado.");
-                    Cpf = string.Empty;
-                }
+                nome = value.Trim();
             }
+        }
 
-            while (string.IsNullOrWhiteSpace(Nome))
+
+        public int Idade
+        {
+            get => idade;
+            private set
             {
-
-                Console.Write("Nome: ");
-                Nome = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(Nome))
+                if (value <= 0)
                 {
-                    Console.WriteLine("O nome não pode estar vazio.");
+                    throw new Exception("Idade inválida");
                 }
+                idade = value;
             }
+        }
 
-            while (Idade <= 0)
+        public string Cpf
+        {
+            get => cpf;
+            private set
             {
-
-                Console.Write("Idade: ");
-                var IdadeInput = Console.ReadLine();
-
-                if (int.TryParse(IdadeInput, out Idade) && Idade < 0)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("A idade não pode ser menor ou igual a zero.");
+                    throw new Exception("Cpf não pode ser vazio");
                 }
-                else if (!int.TryParse(IdadeInput, out Idade))
+                var cpfTrim = value.Trim();
+
+                if (Biblioteca.leitores.Any(leitor => leitor.Cpf == cpfTrim))
                 {
-                    Console.WriteLine("A idade deve ser um número inteiro.");
+                    throw new Exception("Cpf ja existe");
                 }
+                cpf = cpfTrim;
             }
+        }
 
+        public Leitor(string nome, int idade, string cpf)
+        {
+            Nome = nome;
+            Idade = idade;
+            Cpf = cpf;
             livros = new List<Livro>();
         }
 

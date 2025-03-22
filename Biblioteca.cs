@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AplicativoBiblioteca
 {
-    class Biblioteca
+    internal class Biblioteca
     {
         public static List<Leitor> leitores = new List<Leitor>();
 
@@ -17,6 +17,65 @@ namespace AplicativoBiblioteca
         {
             leitores.Add(leitor);
             return true;
+        }
+
+        public void CriarLeitor()
+        {
+            Console.WriteLine("Cadastro de novo leitor");
+
+            //Coleta e tratamento de exceção de cpf
+            string cpf = "";
+            bool cpfValido = false;
+            while(!cpfValido)
+            {
+                try
+                {
+                   cpf = ColetaCpf();
+                   cpfValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+    
+            //Coleta e tratamento de exceção de nome
+            string nome = "";
+            bool nomeValido = false;
+            while (!nomeValido)
+            {
+                try
+                {
+                    nome = ColetaNome();  
+                    nomeValido = true; 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+
+            //Coleta e tratamento de exceção de idade
+            int idade = 0;
+            bool idadeValida = false;
+            while(!idadeValida)
+            {
+                try
+                {
+                    idade = ColetaIdade();
+                    idadeValida = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            Leitor novoLeitor = new Leitor(nome, idade, cpf);
+            AdicionarLeitor(novoLeitor);
+            Console.WriteLine("Leitor adicionado com sucesso!");
+
         }
 
         public void ListarLeitores()
@@ -194,6 +253,67 @@ namespace AplicativoBiblioteca
             {
                 Console.WriteLine("Leitor destinatário não encontrado.");
             }
+        }
+
+        private string ColetaCpf()
+        {
+            string cpf;
+
+            do
+            {
+                Console.Write("CPF: ");
+                cpf = Console.ReadLine()?.Trim();
+
+                if (string.IsNullOrWhiteSpace(cpf))
+                {
+                    throw new Exception("Cpf não pode ser vazio");
+                }
+                else if (ExisteCPF(cpf))
+                {
+                    throw new Exception("Cpf ja existe");
+                    cpf = string.Empty;
+                }
+
+            } while (string.IsNullOrWhiteSpace(cpf));
+
+            return cpf;
+        }
+
+        private string ColetaNome()
+        {
+            string nome;
+            do
+            {
+                Console.Write("Nome: ");
+                nome = Console.ReadLine()?.Trim();
+
+                if (string.IsNullOrWhiteSpace(nome))
+                {
+                    throw new Exception("Nome não pode ser vazio");
+                }
+
+            } while (string.IsNullOrWhiteSpace(nome));
+
+            return nome;
+        }
+
+        private int ColetaIdade()
+        {
+            int idade;
+            do
+            {
+                Console.Write("Idade: ");
+                string inputIdade = Console.ReadLine();
+
+                if (!int.TryParse(inputIdade, out idade))
+                {
+                    throw new Exception("Idade inválida");
+                    idade = 0;
+                }
+
+            } while (idade <= 0);
+
+            return idade;
         }
     }
 }
