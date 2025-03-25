@@ -1,20 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q4q506Kg0LQ=",
+  "dgSpecHash": "jCUIT6B/TBc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Augusto\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.13\\microsoft.netcore.app.ref.8.0.13.nupkg.sha512",
-    "C:\\Users\\Augusto\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.13\\microsoft.windowsdesktop.app.ref.8.0.13.nupkg.sha512",
-    "C:\\Users\\Augusto\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.13\\microsoft.aspnetcore.app.ref.8.0.13.nupkg.sha512",
-    "C:\\Users\\Augusto\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.13\\microsoft.netcore.app.host.win-x64.8.0.13.nupkg.sha512"
-  ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Augusto\\Desktop\\Biblioteca\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "projectFilePath": "C:\\Users\\leona\\Documents\\Projects\\Biblioteca\\Biblioteca\\Biblioteca.csproj",
+  "expectedPackageFiles": [],
+  "logs": []
 }

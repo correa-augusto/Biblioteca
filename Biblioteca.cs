@@ -23,31 +23,31 @@ namespace AplicativoBiblioteca
         {
             Console.WriteLine("Cadastro de novo leitor");
 
-            //Coleta e tratamento de exceção de cpf
-            string cpf = "";
+            var leitor = new Leitor();
+
             bool cpfValido = false;
-            while(!cpfValido)
+            while (!cpfValido)
             {
                 try
                 {
-                   cpf = ColetaCpf();
-                   cpfValido = true;
+                    Console.Write("CPF: ");
+                    leitor.Cpf = Console.ReadLine().Trim();
+                    cpfValido = true;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
-    
-            //Coleta e tratamento de exceção de nome
-            string nome = "";
+
             bool nomeValido = false;
             while (!nomeValido)
             {
                 try
                 {
-                    nome = ColetaNome();  
-                    nomeValido = true; 
+                    Console.Write("Nome: ");
+                    leitor.Nome = Console.ReadLine().Trim();
+                    nomeValido = true;
                 }
                 catch (Exception ex)
                 {
@@ -55,15 +55,20 @@ namespace AplicativoBiblioteca
                 }
             }
 
-
-            //Coleta e tratamento de exceção de idade
             int idade = 0;
             bool idadeValida = false;
-            while(!idadeValida)
+            while (!idadeValida)
             {
                 try
                 {
-                    idade = ColetaIdade();
+                    Console.Write("Idade: ");
+                    var idadeString = Console.ReadLine().Trim();
+                    if (!int.TryParse(idadeString, out idade))
+                    {
+                        throw new Exception("Idade inválida");
+                    }
+                    leitor.Idade = idade;
+
                     idadeValida = true;
                 }
                 catch (Exception ex)
@@ -71,9 +76,7 @@ namespace AplicativoBiblioteca
                     Console.WriteLine(ex.Message);
                 }
             }
-
-            Leitor novoLeitor = new Leitor(nome, idade, cpf);
-            AdicionarLeitor(novoLeitor);
+            AdicionarLeitor(leitor);
             Console.WriteLine("Leitor adicionado com sucesso!");
 
         }
@@ -150,18 +153,171 @@ namespace AplicativoBiblioteca
 
         public void AdicionarLivrosAoLeitor()
         {
+            Console.WriteLine("Adicionando livro ao leitor...");
+
             Console.Write("Digite o CPF do leitor: ");
             string cpf = Console.ReadLine().Trim();
+
             Leitor leitor = leitores.FirstOrDefault(l => l.Cpf == cpf);
-            if (leitor != null)
-            {
-                Livro livro = new Livro();
-                leitor.AdicionarLivro(livro);
-            }
-            else
+
+            if (leitor == null)
             {
                 Console.WriteLine("Não é possível adicionar livro, pois o leitor não existe.");
+                return;
             }
+
+            Console.WriteLine($"Leitor encontrado: {leitor.Nome}");
+            Console.WriteLine("Cadastro de novo livro");
+
+            var livro = new Livro();
+
+            bool isbnValido = false;
+            while (!isbnValido)
+            {
+                try
+                {
+                    Console.Write("ISBN: ");
+                    livro = new Livro() { Isbn = Console.ReadLine().Trim() };
+                    isbnValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool tituloValido = false;
+            while (!tituloValido)
+            {
+                try
+                {
+                    Console.Write("Título: ");
+                    livro.Titulo = Console.ReadLine().Trim();
+                    tituloValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool subtituloValido = false;
+            while (!subtituloValido)
+            {
+                try
+                {
+                    Console.Write("Subtítulo: ");
+                    livro.Subtitulo = Console.ReadLine().Trim();
+                    subtituloValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool escritorValido = false;
+            while (!escritorValido)
+            {
+                try
+                {
+                    Console.Write("Escritor: ");
+                    livro.Escritor = Console.ReadLine().Trim();
+                    escritorValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool editoraValida = false;
+            while (!editoraValida)
+            {
+                try
+                {
+                    Console.Write("Editora: ");
+                    livro.Editora = Console.ReadLine().Trim();
+                    editoraValida = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool generoValido = false;
+            while (!generoValido)
+            {
+                try
+                {
+                    Console.Write("Gênero: ");
+                    livro.Genero = Console.ReadLine().Trim();
+                    generoValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool capaValida = false;
+            while (!capaValida)
+            {
+                try
+                {
+                    Console.Write("Tipo da capa: ");
+                    livro.TipoDaCapa = Console.ReadLine().Trim();
+                    capaValida = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool anoValido = false;
+            while (!anoValido)
+            {
+                try
+                {
+                    Console.Write("Ano de publicação: ");
+                    string anoString = Console.ReadLine().Trim();
+                    if (!int.TryParse(anoString, out int ano) || ano <= 0)
+                    {
+                        throw new Exception("O ano de publicação deve ser um número inteiro positivo.");
+                    }
+                    livro.AnoPublicacao = ano;
+                    anoValido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            bool paginasValidas = false;
+            while (!paginasValidas)
+            {
+                try
+                {
+                    Console.Write("Número de páginas: ");
+                    string paginasString = Console.ReadLine().Trim();
+                    if (!int.TryParse(paginasString, out int paginas) || paginas <= 0)
+                    {
+                        throw new Exception("O número de páginas deve ser um número inteiro positivo.");
+                    }
+                    livro.NumeroDePaginas = paginas;
+                    paginasValidas = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            leitor.AdicionarLivro(livro);
+            Console.WriteLine($"Livro \"{livro.Titulo}\" adicionado com sucesso ao leitor {leitor.Nome}.");
         }
 
         public void EditarLivroDoLeitor()
@@ -253,67 +409,6 @@ namespace AplicativoBiblioteca
             {
                 Console.WriteLine("Leitor destinatário não encontrado.");
             }
-        }
-
-        private string ColetaCpf()
-        {
-            string cpf;
-
-            do
-            {
-                Console.Write("CPF: ");
-                cpf = Console.ReadLine()?.Trim();
-
-                if (string.IsNullOrWhiteSpace(cpf))
-                {
-                    throw new Exception("Cpf não pode ser vazio");
-                }
-                else if (ExisteCPF(cpf))
-                {
-                    throw new Exception("Cpf ja existe");
-                    cpf = string.Empty;
-                }
-
-            } while (string.IsNullOrWhiteSpace(cpf));
-
-            return cpf;
-        }
-
-        private string ColetaNome()
-        {
-            string nome;
-            do
-            {
-                Console.Write("Nome: ");
-                nome = Console.ReadLine()?.Trim();
-
-                if (string.IsNullOrWhiteSpace(nome))
-                {
-                    throw new Exception("Nome não pode ser vazio");
-                }
-
-            } while (string.IsNullOrWhiteSpace(nome));
-
-            return nome;
-        }
-
-        private int ColetaIdade()
-        {
-            int idade;
-            do
-            {
-                Console.Write("Idade: ");
-                string inputIdade = Console.ReadLine();
-
-                if (!int.TryParse(inputIdade, out idade))
-                {
-                    throw new Exception("Idade inválida");
-                    idade = 0;
-                }
-
-            } while (idade <= 0);
-
-            return idade;
         }
     }
 }

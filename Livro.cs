@@ -4,111 +4,140 @@ namespace AplicativoBiblioteca
 {
     class Livro
     {
-        public string Titulo;
-        public string Subtitulo;
-        public string Escritor;
-        public string Editora;
-        public string Genero;
-        public string TipoDaCapa;
-        public int AnoPublicacao;
-        public int NumeroDePaginas;
+        private string titulo;
+        private string subtitulo;
+        private string escritor;
+        private string editora;
+        private string genero;
+        private string tipoDaCapa;
+        private int anoPublicacao;
+        private int numeroDePaginas;
+        private string isbn { get; set; }
 
-        public Livro()
+        public string Isbn
         {
-            while (string.IsNullOrWhiteSpace(Titulo))
+            get => isbn;
+            init
             {
-                Console.Write("Título: ");
-                Titulo = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(Titulo))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("O título não pode estar vazio.");
+                    throw new Exception("Isbn não pode ser vazio");
                 }
+                isbn = value.Trim();
             }
+        }
 
-            while (string.IsNullOrWhiteSpace(Subtitulo))
+        public string Titulo
+        {
+            get => titulo;
+            set
             {
-                Console.Write("Subtítulo: ");
-                Subtitulo = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(Subtitulo))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("O subtítulo não pode estar vazio.");
+                    throw new Exception("O título não pode estar vazio.");
                 }
+                titulo = value.Trim();
             }
+        }
 
-            while (string.IsNullOrWhiteSpace(Escritor))
+        public string Subtitulo
+        {
+            get => subtitulo;
+            set
             {
-                Console.Write("Escritor: ");
-                Escritor = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(Escritor))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("O escritor não pode estar vazio.");
+                    throw new Exception("O subtítulo não pode estar vazio.");
                 }
+                subtitulo = value.Trim();
             }
+        }
 
-            while (string.IsNullOrWhiteSpace(Editora))
+        public string Escritor
+        {
+            get => escritor;
+            set
             {
-                Console.Write("Editora: ");
-                Editora = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(Editora))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("A editora não pode estar vazia.");
+                    throw new Exception("O escritor não pode estar vazio.");
                 }
+                escritor = value.Trim();
             }
+        }
 
-            while (string.IsNullOrWhiteSpace(Genero))
+        public string Editora
+        {
+            get => editora;
+            set
             {
-                Console.Write("Gênero: ");
-                Genero = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(Genero))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("O gênero não pode estar vazio.");
+                    throw new Exception("A editora não pode estar vazia.");
                 }
+                editora = value.Trim();
             }
+        }
 
-            while (string.IsNullOrWhiteSpace(TipoDaCapa))
+        public string Genero
+        {
+            get => genero;
+            set
             {
-                Console.Write("Tipo da capa: ");
-                TipoDaCapa = Console.ReadLine().Trim();
-
-                if (string.IsNullOrWhiteSpace(TipoDaCapa))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("O tipo da capa não pode estar vazio.");
+                    throw new Exception("O gênero não pode estar vazio.");
                 }
+                genero = value.Trim();
             }
+        }
 
-            while (AnoPublicacao <= 0)
+        public string TipoDaCapa
+        {
+            get => tipoDaCapa;
+            set
             {
-                Console.Write("Ano de publicação: ");
-                var anoPublicacaoInput = Console.ReadLine();
-
-                if (int.TryParse(anoPublicacaoInput, out AnoPublicacao) && AnoPublicacao <= 0)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    Console.WriteLine("O ano de publicação não pode ser menor ou igual a zero.");
+                    throw new Exception("O tipo da capa não pode estar vazio.");
                 }
-                else if (!int.TryParse(anoPublicacaoInput, out AnoPublicacao))
-                {
-                    Console.WriteLine("O ano de publicação deve ser um número inteiro.");
-                }
+                tipoDaCapa = value.Trim();
             }
+        }
 
-            while (NumeroDePaginas <= 0)
+        public int AnoPublicacao
+        {
+            get => anoPublicacao;
+            set
             {
-                Console.Write("Número de páginas: ");
-                var numeroDePaginasInput = Console.ReadLine();
+                if (value <= 0)
+                {
+                    throw new Exception("O ano de publicação deve ser maior que zero.");
+                }
+                else if (value < 1970)
+                {
+                    throw new Exception("O ano de publicação deve ser maior que 1970.");
+                }
+                else if (value > DateTime.Now.Year)
+                {
+                    throw new Exception("O ano de publicação não pode ser maior que o ano atual.");
+                }
 
-                if (int.TryParse(numeroDePaginasInput, out NumeroDePaginas) && NumeroDePaginas <= 0)
+                anoPublicacao = value;
+            }
+        }
+
+        public int NumeroDePaginas
+        {
+            get => numeroDePaginas;
+            set
+            {
+                if (value <= 0)
                 {
-                    Console.WriteLine("O número de páginas não pode ser menor ou igual a zero.");
+                    throw new Exception("O número de páginas deve ser maior que zero.");
                 }
-                else if (!int.TryParse(numeroDePaginasInput, out NumeroDePaginas))
-                {
-                    Console.WriteLine("O número de páginas deve ser um número inteiro.");
-                }
+
+                numeroDePaginas = value;
             }
         }
 

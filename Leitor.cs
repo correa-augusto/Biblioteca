@@ -9,12 +9,12 @@ namespace AplicativoBiblioteca
         private string nome;
         private int idade;
         private string cpf;
-        private List<Livro> livros;
+        private List<Livro> livros = new();
 
         public string Nome
         {
             get => nome;
-            private set
+            set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
@@ -28,7 +28,7 @@ namespace AplicativoBiblioteca
         public int Idade
         {
             get => idade;
-            private set
+            set
             {
                 if (value <= 0)
                 {
@@ -41,13 +41,14 @@ namespace AplicativoBiblioteca
         public string Cpf
         {
             get => cpf;
-            private set
+            set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                var cpfTrim = value.Trim();
+
+                if (string.IsNullOrWhiteSpace(cpfTrim))
                 {
                     throw new Exception("Cpf não pode ser vazio");
                 }
-                var cpfTrim = value.Trim();
 
                 if (Biblioteca.leitores.Any(leitor => leitor.Cpf == cpfTrim))
                 {
@@ -55,14 +56,6 @@ namespace AplicativoBiblioteca
                 }
                 cpf = cpfTrim;
             }
-        }
-
-        public Leitor(string nome, int idade, string cpf)
-        {
-            Nome = nome;
-            Idade = idade;
-            Cpf = cpf;
-            livros = new List<Livro>();
         }
 
         public void AdicionarLivro(Livro livro) => livros.Add(livro);
@@ -78,7 +71,7 @@ namespace AplicativoBiblioteca
 
         public void RemoverLivro(string titulo)
         {
-            Livro livro = BuscarLivro(titulo);
+            var livro = BuscarLivro(titulo);
             if (livro != null) livros.Remove(livro);
         }
 
