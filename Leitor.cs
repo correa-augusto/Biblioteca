@@ -6,62 +6,63 @@ namespace AplicativoBiblioteca
 {
     class Leitor
     {
-        private string nome;
-        private int idade;
-        private string cpf;
+        public string Nome;
+
+        public int Idade;
+        public string Cpf;
         private List<Livro> livros;
 
-        public string Nome
+        public Leitor()
         {
-            get => nome;
-            private set
+            while (string.IsNullOrWhiteSpace(Cpf))
             {
-                if (string.IsNullOrWhiteSpace(value))
+                Console.Write("CPF (digite \"sair\" para voltar ao menu): ");
+                Cpf = Console.ReadLine().Trim();
+
+                if (Cpf.Equals("sair", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new Exception("Nome não pode ser vazio");
+                    return;
                 }
-                nome = value.Trim();
-            }
-        }
 
-
-        public int Idade
-        {
-            get => idade;
-            private set
-            {
-                if (value <= 0)
+                if (string.IsNullOrWhiteSpace(Cpf))
                 {
-                    throw new Exception("Idade inválida");
+                    Console.WriteLine("O CPF não pode estar vazio.");
                 }
-                idade = value;
+                else if (Biblioteca.ExisteCPF(Cpf))
+                {
+                    Console.WriteLine("O CPF já está cadastrado.");
+                    Cpf = string.Empty;
+                }
             }
-        }
 
-        public string Cpf
-        {
-            get => cpf;
-            private set
+            while (string.IsNullOrWhiteSpace(Nome))
             {
-                if (string.IsNullOrWhiteSpace(value))
+
+                Console.Write("Nome: ");
+                Nome = Console.ReadLine().Trim();
+
+                if (string.IsNullOrWhiteSpace(Nome))
                 {
                     throw new Exception("Cpf não pode ser vazio");
                 }
-                var cpfTrim = value.Trim();
-
-                if (Biblioteca.leitores.Any(leitor => leitor.Cpf == cpfTrim))
-                {
-                    throw new Exception("Cpf ja existe");
-                }
-                cpf = cpfTrim;
             }
-        }
 
-        public Leitor(string nome, int idade, string cpf)
-        {
-            Nome = nome;
-            Idade = idade;
-            Cpf = cpf;
+            while (Idade <= 0)
+            {
+
+                Console.Write("Idade: ");
+                var IdadeInput = Console.ReadLine();
+
+                if (int.TryParse(IdadeInput, out Idade) && Idade < 0)
+                {
+                    Console.WriteLine("A idade não pode ser menor ou igual a zero.");
+                }
+                else if (!int.TryParse(IdadeInput, out Idade))
+                {
+                    Console.WriteLine("A idade deve ser um número inteiro.");
+                }
+            }
+
             livros = new List<Livro>();
         }
 
@@ -79,10 +80,29 @@ namespace AplicativoBiblioteca
         public void RemoverLivro(string titulo)
         {
             Livro livro = BuscarLivro(titulo);
-            if (livro != null) livros.Remove(livro);
+            if (livro != null)
+            {
+                livros.Remove(livro);
+                Console.WriteLine($"Livro \"{titulo}\" removido com sucesso.");
+            }
+            else
+            {
+                Console.WriteLine($"Livro \"{titulo}\" não encontrado.");
+            }
         }
 
-        public void EditarNome(string novoNome) => Nome = novoNome;
+        public void EditarNome(string novoNome)
+        {
+            if (!string.IsNullOrWhiteSpace(novoNome))
+            {
+                Nome = novoNome.Trim();
+                Console.WriteLine("Nome atualizado com sucesso.");
+            }
+            else
+            {
+                Console.WriteLine("O novo nome não pode estar vazio.");
+            }
+        }
 
         public List<Livro> ObterLivros() => livros;
     }

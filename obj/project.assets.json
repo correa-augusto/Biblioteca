@@ -8,20 +8,10 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Augusto\\.nuget\\packages\\": {}
-  },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj",
-      "projectName": "Biblioteca",
-      "projectPath": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\Biblioteca.csproj",
-      "packagesPath": "C:\\Users\\Augusto\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Augusto\\Desktop\\Biblioteca\\obj\\",
-      "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\Augusto\\AppData\\Roaming\\NuGet\\NuGet.Config"
-      ],
+
       "originalTargetFrameworks": [
         "net8.0"
       ],
